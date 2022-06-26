@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.ScatterChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.kacperk.ODESolverController">
+    <bottom>
+        <VBox prefHeight="145.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="TOP_RIGHT" prefHeight="137.0" prefWidth="900.0">
+                    <children>
+                        <TextField fx:id="textFileName" prefHeight="28.0" prefWidth="128.0" promptText="text file name">
+                            <HBox.margin>
+                                <Insets right="15.0" top="10.0" />
+                            </HBox.margin>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </TextField>
+                        <Button fx:id="btnSaveSeries" mnemonicParsing="false" onAction="#btnSaveSeriesClicked" prefHeight="28.0" prefWidth="85.0" text="Save series" textFill="WHITE">
+                            <HBox.margin>
+                                <Insets right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="134.0" prefWidth="900.0">
+                    <children>
+                        <TextField fx:id="equation" prefHeight="28.0" prefWidth="250.0" promptText="equation">
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <HBox.margin>
+                                <Insets left="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </TextField>
+                        <TextField fx:id="tLeft" prefHeight="28.0" prefWidth="110.0" promptText="a" styleClass="TextFields">
+                            <HBox.margin>
+                                <Insets left="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </TextField>
+                        <TextField fx:id="tRight" prefHeight="28.0" prefWidth="110.0" promptText="b">
+                            <HBox.margin>
+                                <Insets left="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </TextField>
+                        <TextField fx:id="step" prefHeight="28.0" prefWidth="110.0" promptText="h">
+                            <HBox.margin>
+                                <Insets left="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </TextField>
+                        <TextField fx:id="initialCondition" prefHeight="28.0" prefWidth="110.0" promptText="x0">
+                            <HBox.margin>
+                                <Insets left="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </TextField>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="142.0" prefWidth="900.0">
+                    <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Method: " textAlignment="CENTER" wrappingWidth="54.294525146484375">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="10.0" />
+                            </HBox.margin>
+                        </Text>
+                        <ChoiceBox fx:id="methods" prefHeight="28.0" prefWidth="100.0">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="10.0" right="10.0" />
+                            </HBox.margin>
+                        </ChoiceBox>
+                        <Button fx:id="btnCalculate" mnemonicParsing="false" onAction="#btnCalculateClicked" prefHeight="28.0" prefWidth="106.0" text="Calculate" textAlignment="CENTER" textFill="WHITE">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="10.0" right="10.0" />
+                            </HBox.margin>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </Button>
+                        <TextField fx:id="info" editable="false" mouseTransparent="true" prefHeight="28.0" prefWidth="410.0" promptText="Informations and warnings will be displayed here">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="10.0" right="10.0" />
+                            </HBox.margin>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </TextField>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </bottom>
+    <top>
+        <Pane prefHeight="15.0" prefWidth="800.0" BorderPane.alignment="CENTER" />
+    </top>
+    <left>
+        <Pane prefHeight="478.0" prefWidth="15.0" BorderPane.alignment="CENTER" />
+    </left>
+    <center>
+        <ScatterChart fx:id="txChart" prefHeight="452.0" prefWidth="645.0" style="i: white;" title="x(t)" BorderPane.alignment="CENTER">
+            <xAxis>
+                <NumberAxis fx:id="tAxis" label="t" prefHeight="25.0" prefWidth="520.0" side="BOTTOM">
+                    <padding>
+                        <Insets bottom="10.0" />
+                    </padding>
+                </NumberAxis>
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="x" prefHeight="398.0" prefWidth="36.0" side="LEFT" fx:id="xAxis" />
+            </yAxis>
+            <padding>
+                <Insets right="10.0" />
+            </padding>
+        </ScatterChart>
+    </center>
+    <right>
+        <TableView fx:id="table" prefHeight="425.0" prefWidth="240.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn prefWidth="135.0" text="x" fx:id="x" />
+                <TableColumn fx:id="time" prefWidth="105.0" text="t" />
+            </columns>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+        </TableView>
+    </right>
+</BorderPane>
