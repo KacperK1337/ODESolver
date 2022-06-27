@@ -1,6 +1,11 @@
 # ODESolver
 JavaFx app that solves ordinary differential equations and visualise solutions.
 
+### Section links
+
+|[General](#general)|[Demo](#demo)|[Version history](#version-history)|[Feedback](#feedback)|
+|:-----------------:|:-----------:|:---------------------------------:|:-------------------:|
+___
 ### General
 Application solves first-order ODE with Euler method and supports its forward and midpoint variants. 
 To solve ODE it needs:
@@ -20,9 +25,17 @@ Below I present a video showing an example of using the application.
 https://user-images.githubusercontent.com/95027426/175818157-1321a454-0546-4d18-8b02-aa6135a4eea2.mp4
 
 ### Version history
-- 1.0.0 (Base app)
+**1.0.1**
 
-Solving first-order ordinary differential equations. Supported method: Euler forward and Euler midpoint. Visualisation on table and scatter plot. Saving table values.
+- updated .gitignore file
+- minor performance update
+
+**1.0.0 (Base app)**
+
+- solving first-order ordinary differential equations
+- supported methods: Euler forward and Euler midpoint
+- visualisation on table and scatter plot
+- saving table values
 
 ### Feedback
 If you have any questions or comments regarding the app, please place them in Discussion panel or contact me directly.
