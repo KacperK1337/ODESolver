@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mariuszgromada.math.mxparser.Function;
 import pl.kacperk.exception.ExceptionHandler;
 import pl.kacperk.table.PointsHandler;
 
@@ -13,19 +14,21 @@ public class ODEIntegrateTest {
     private double a;
     private double b;
     private double x0;
-    private String ode;
+    private Function ode;
     private Euler euler;
     private PointsHandler pointsHandler;
+    private EquationHandler equationHandler;
     private ExceptionHandler exceptionHandler;
     private double h;
 
     @BeforeEach
-    public void beforeEach() {
+    public void beforeEach() throws Exception {
         x0 = 1;
-        ode = "t+x";
+        String equationString = "t+x";
         euler = new Euler(EulerMethod.Midpoint);
         pointsHandler = new PointsHandler();
         exceptionHandler = new ExceptionHandler();
+        ode = new EquationHandler(exceptionHandler).getEquation(equationString);
     }
 
     @Test
@@ -64,7 +67,7 @@ public class ODEIntegrateTest {
 
         Assertions.assertEquals(pointsHandler.getTValues().get(1), a + h);
         Assertions.assertEquals(pointsHandler.getXValues().get(1),
-                euler.nextIteration(a, x0, h, ode, exceptionHandler));
+                euler.nextIteration(a, x0, h, ode));
 
         org.assertj.core.api.Assertions.assertThat(exceptionHandler.getExceptionMessage()).isNull();
     }

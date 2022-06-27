@@ -9,7 +9,9 @@ import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.mariuszgromada.math.mxparser.Function;
 import pl.kacperk.exception.ExceptionHandler;
+import pl.kacperk.math.EquationHandler;
 import pl.kacperk.math.Euler;
 import pl.kacperk.math.EulerMethod;
 import pl.kacperk.math.ODEIntegrate;
@@ -21,6 +23,7 @@ public class ODESolverController {
     private final ExceptionHandler exceptionHandler = new ExceptionHandler();
     private final ObservableList<PointTX> tableValues = FXCollections.observableArrayList();
     private final SaveHandler saveHandler = new SaveHandler(exceptionHandler);
+    private final EquationHandler equationHandler = new EquationHandler(exceptionHandler);
 
     @FXML
     private Button btnCalculate; //To solve ODE
@@ -81,10 +84,11 @@ public class ODESolverController {
             double h = Double.parseDouble(step.getText());
             double x0 = Double.parseDouble(initialCondition.getText());
             paramsParsed = true;
+            Function ode = equationHandler.getEquation(equation.getText());
             EulerMethod method = methods.getValue(); //Getting Euler's variant
             PointsHandler pointsHandler = new PointsHandler();
             ODEIntegrate odeIntegrate = new ODEIntegrate(
-                    a, b, x0, equation.getText(), new Euler(method), pointsHandler, exceptionHandler);
+                    a, b, x0, ode, new Euler(method), pointsHandler, exceptionHandler);
             odeIntegrate.integrate(h); //Solving ODE
 
             tableValues.addAll(PointTX.getTXPoints
@@ -92,7 +96,6 @@ public class ODESolverController {
 
             XYChart.Series<Double, Double> series = pointsHandler.getSeries();
             txChart.getData().addAll(series); //Creating chart on calculated points
-            txChart.setLegendVisible(false); //Removing legend (not needed)
 
             info.setStyle("-fx-border-color: #422775;");
             info.setText("Calculations successful");
@@ -137,6 +140,7 @@ public class ODESolverController {
         assert info != null : "fx:id=\"info\" was not injected: check your FXML file 'odeSolver.fxml'.";
         assert equation != null : "fx:id=\"equation\" was not injected: check your FXML file 'odeSolver.fxml'.";
 
+        txChart.setLegendVisible(false); //Removing legend (not needed)
         time.setCellValueFactory(new PropertyValueFactory<>("time"));
         x.setCellValueFactory(new PropertyValueFactory<>("x"));
         table.setItems(tableValues);

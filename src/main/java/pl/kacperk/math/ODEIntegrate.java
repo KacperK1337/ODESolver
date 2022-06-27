@@ -1,5 +1,6 @@
 package pl.kacperk.math;
 
+import org.mariuszgromada.math.mxparser.Function;
 import pl.kacperk.exception.ExceptionHandler;
 import pl.kacperk.table.PointsHandler;
 
@@ -8,12 +9,12 @@ public class ODEIntegrate {
     private final double a;
     private final double b;
     private final double x0;
-    private final String ode;
+    private final Function ode;
     private final Euler euler;
     private final PointsHandler pointsHandler;
     private final ExceptionHandler exceptionHandler;
 
-    public ODEIntegrate(double a, double b, double x0, String ode, Euler euler,
+    public ODEIntegrate(double a, double b, double x0, Function ode, Euler euler,
                         PointsHandler pointsHandler, ExceptionHandler exceptionHandler) {
         this.a = a;
         this.b = b;
@@ -35,7 +36,7 @@ public class ODEIntegrate {
                 x_i[i] = x0;
             } else {
                 t_i[i] += a + (i * h);
-                x_i[i] = euler.nextIteration(t_i[i - 1], x_i[i - 1], h, ode, exceptionHandler);
+                x_i[i] = euler.nextIteration(t_i[i - 1], x_i[i - 1], h, ode);
             }
             pointsHandler.update(t_i[i], x_i[i]);
         }

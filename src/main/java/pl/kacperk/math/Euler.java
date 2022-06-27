@@ -12,13 +12,12 @@ public class Euler {
         this.eulerMethod = eulerMethod;
     }
 
-    public double nextIteration(double t, double x, double h, String ode, ExceptionHandler exceptionHandler) throws Exception {
-        Function odeFunction = new EquationHandler(exceptionHandler).getEquation(ode);
+    public double nextIteration(double t, double x, double h, Function ode){
         double slope = 0;
         switch (eulerMethod) {
-            case Forward -> slope = odeFunction.calculate(t, x);
+            case Forward -> slope = ode.calculate(t, x);
             case Midpoint -> slope =
-                    odeFunction.calculate(t + (h / 2), x + (h / 2) * odeFunction.calculate(t, x));
+                    ode.calculate(t + (h / 2), x + (h / 2) * ode.calculate(t, x));
         }
         return x + h * slope;
     }

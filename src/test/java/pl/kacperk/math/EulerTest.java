@@ -10,42 +10,40 @@ public class EulerTest {
     private double t;
     private double x;
     private double h;
-    private String ode;
-    private ExceptionHandler exceptionHandler;
-    private Function odeFunction;
+    private Function ode;
 
     @BeforeEach
     public void beforeEach() throws Exception {
         t = 1;
         x = 2;
         h = 0.1;
-        ode = "t+x";
-        exceptionHandler = new ExceptionHandler();
-        odeFunction = new EquationHandler(exceptionHandler).getEquation(ode);
+        String equationString = "t+x";
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        ode = new EquationHandler(exceptionHandler).getEquation(equationString);
     }
 
     @Test
-    public void nextIteration_forwardMethod_correctResult() throws Exception {
+    public void nextIteration_forwardMethod_correctResult() {
         //given
         Euler eulerForward = new Euler(EulerMethod.Forward);
 
         //when
-        double result = eulerForward.nextIteration(t, x, h, ode, exceptionHandler);
+        double result = eulerForward.nextIteration(t, x, h, ode);
 
         //then
-        Assertions.assertEquals(result, x + h * (odeFunction.calculate(t, x)));
+        Assertions.assertEquals(result, x + h * (ode.calculate(t, x)));
     }
 
     @Test
-    public void nextIteration_midpointMethod_correctResult() throws Exception {
+    public void nextIteration_midpointMethod_correctResult() {
         //given
         Euler eulerMidpoint = new Euler(EulerMethod.Midpoint);
 
         //when
-        double result = eulerMidpoint.nextIteration(t, x, h, ode, exceptionHandler);
+        double result = eulerMidpoint.nextIteration(t, x, h, ode);
 
         //then
-        Assertions.assertEquals(result, x + h * (odeFunction.calculate(t + (h / 2), x + (h / 2) *
-                odeFunction.calculate(t, x))));
+        Assertions.assertEquals(result, x + h * (ode.calculate(t + (h / 2), x + (h / 2) *
+                ode.calculate(t, x))));
     }
 }
