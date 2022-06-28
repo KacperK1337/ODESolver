@@ -19,7 +19,7 @@ import pl.kacperk.save.SaveHandler;
 import pl.kacperk.table.PointTX;
 import pl.kacperk.table.PointsHandler;
 
-public class ODESolverController {
+public class mainController {
     private final ExceptionHandler exceptionHandler = new ExceptionHandler();
     private final ObservableList<PointTX> tableValues = FXCollections.observableArrayList();
     private final SaveHandler saveHandler = new SaveHandler(exceptionHandler);
@@ -124,21 +124,21 @@ public class ODESolverController {
 
     @FXML
     void initialize() {
-        assert btnCalculate != null : "fx:id=\"btnCalculate\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert btnSaveSeries != null : "fx:id=\"btnSaveSeries\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert table != null : "fx:id=\"table\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert tLeft != null : "fx:id=\"tLeft\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert tRight != null : "fx:id=\"tRight\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert time != null : "fx:id=\"time\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert x != null : "fx:id=\"x\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert step != null : "fx:id=\"step\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert methods != null : "fx:id=\"method\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert initialCondition != null : "fx:id=\"x0\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert tAxis != null : "fx:id=\"tAxis\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert txChart != null : "fx:id=\"txChart\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert xAxis != null : "fx:id=\"xAxis\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert info != null : "fx:id=\"info\" was not injected: check your FXML file 'odeSolver.fxml'.";
-        assert equation != null : "fx:id=\"equation\" was not injected: check your FXML file 'odeSolver.fxml'.";
+        assert btnCalculate != null : "fx:id=\"btnCalculate\" was not injected: check your FXML file 'main.fxml'.";
+        assert btnSaveSeries != null : "fx:id=\"btnSaveSeries\" was not injected: check your FXML file 'main.fxml'.";
+        assert table != null : "fx:id=\"table\" was not injected: check your FXML file 'main.fxml'.";
+        assert tLeft != null : "fx:id=\"tLeft\" was not injected: check your FXML file 'main.fxml'.";
+        assert tRight != null : "fx:id=\"tRight\" was not injected: check your FXML file 'main.fxml'.";
+        assert time != null : "fx:id=\"time\" was not injected: check your FXML file 'main.fxml'.";
+        assert x != null : "fx:id=\"x\" was not injected: check your FXML file 'main.fxml'.";
+        assert step != null : "fx:id=\"step\" was not injected: check your FXML file 'main.fxml'.";
+        assert methods != null : "fx:id=\"method\" was not injected: check your FXML file 'main.fxml'.";
+        assert initialCondition != null : "fx:id=\"x0\" was not injected: check your FXML file 'main.fxml'.";
+        assert tAxis != null : "fx:id=\"tAxis\" was not injected: check your FXML file 'main.fxml'.";
+        assert txChart != null : "fx:id=\"txChart\" was not injected: check your FXML file 'main.fxml'.";
+        assert xAxis != null : "fx:id=\"xAxis\" was not injected: check your FXML file 'main.fxml'.";
+        assert info != null : "fx:id=\"info\" was not injected: check your FXML file 'main.fxml'.";
+        assert equation != null : "fx:id=\"equation\" was not injected: check your FXML file 'main.fxml'.";
 
         txChart.setLegendVisible(false); //Removing legend (not needed)
         time.setCellValueFactory(new PropertyValueFactory<>("time"));

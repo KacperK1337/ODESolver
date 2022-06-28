@@ -16,7 +16,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
             prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.kacperk.ODESolverController">
+            fx:controller="pl.kacperk.mainController">
     <bottom>
         <VBox prefHeight="145.0" prefWidth="900.0" BorderPane.alignment="CENTER">
             <children>
