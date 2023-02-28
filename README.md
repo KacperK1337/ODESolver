@@ -25,6 +25,11 @@ Below I present a video showing an example of using the application.
 https://user-images.githubusercontent.com/95027426/175818157-1321a454-0546-4d18-8b02-aa6135a4eea2.mp4
 
 ### Version history
+**1.1.0**
+
+- major improvements to code readability and syntax
+- fixed code smell in tests
+
 **1.0.1**
 
 - updated .gitignore file
