@@ -19,35 +19,36 @@ import pl.kacperk.save.SaveHandler;
 import pl.kacperk.table.PointTX;
 import pl.kacperk.table.PointsHandler;
 
-public class mainController {
+public class MainController {
+
     private final ExceptionHandler exceptionHandler = new ExceptionHandler();
     private final ObservableList<PointTX> tableValues = FXCollections.observableArrayList();
     private final SaveHandler saveHandler = new SaveHandler(exceptionHandler);
     private final EquationHandler equationHandler = new EquationHandler(exceptionHandler);
 
     @FXML
-    private Button btnCalculate; //To solve ODE
+    private Button btnCalculate;
 
     @FXML
-    private ChoiceBox<EulerMethod> methods; //Contains Euler's method variants
+    private ChoiceBox<EulerMethod> methods;
 
     @FXML
-    private TextField tLeft; //Beginning of compartment (a)
+    private TextField tLeft;
 
     @FXML
-    private TextField tRight; //End of compartment (b)
+    private TextField tRight;
 
     @FXML
-    private TextField step; //(h)
+    private TextField step;
 
     @FXML
-    private TextField initialCondition; //(x0)
+    private TextField initialCondition;
 
     @FXML
-    private TextField info; //Field to display informations/errors
+    private TextField info;
 
     @FXML
-    private TextField equation; //ODE
+    private TextField equation;
 
     @FXML
     private ScatterChart<Double, Double> txChart;
@@ -59,10 +60,10 @@ public class mainController {
     private NumberAxis xAxis;
 
     @FXML
-    private Button btnSaveSeries; //To save table series
+    private Button btnSaveSeries;
 
     @FXML
-    private TextField textFileName; //Filename to save table series
+    private TextField textFileName;
 
     @FXML
     private TableView<PointTX> table;
@@ -75,36 +76,37 @@ public class mainController {
 
     @FXML
     void btnCalculateClicked() {
-        table.getItems().clear(); //Clearing table and chart on every new calculation
+        table.getItems().clear();
         txChart.getData().clear();
-        boolean paramsParsed = false;
         try {
-            double a = Double.parseDouble(tLeft.getText());  //Parsing params
-            double b = Double.parseDouble(tRight.getText());
-            double h = Double.parseDouble(step.getText());
-            double x0 = Double.parseDouble(initialCondition.getText());
-            paramsParsed = true;
+            String tLeftText = tLeft.getText();
+            String tRightText = tRight.getText();
+            String stepText = step.getText();
+            String initialConditionText = initialCondition.getText();
+            exceptionHandler.checkEnteredParams(tLeftText, tRightText, stepText, initialConditionText);
+
+            double a = Double.parseDouble(tLeftText);
+            double b = Double.parseDouble(tRightText);
+            double h = Double.parseDouble(stepText);
+            double x0 = Double.parseDouble(initialConditionText);
             Function ode = equationHandler.getEquation(equation.getText());
-            EulerMethod method = methods.getValue(); //Getting Euler's variant
+            EulerMethod method = methods.getValue();
             PointsHandler pointsHandler = new PointsHandler();
             ODEIntegrate odeIntegrate = new ODEIntegrate(
-                    a, b, x0, ode, new Euler(method), pointsHandler, exceptionHandler);
-            odeIntegrate.integrate(h); //Solving ODE
-
-            tableValues.addAll(PointTX.getTXPoints
-                    (pointsHandler.getTValues(), pointsHandler.getXValues())); //Adding points to table
-
+                    a, b, x0, ode, new Euler(method), pointsHandler, exceptionHandler
+            );
+            odeIntegrate.integrate(h);
+            tableValues.addAll(PointTX.getTXPoints(
+                    pointsHandler.getTValues(), pointsHandler.getXValues()
+            ));
             XYChart.Series<Double, Double> series = pointsHandler.getSeries();
-            txChart.getData().addAll(series); //Creating chart on calculated points
+            txChart.getData().addAll(series);
 
             info.setStyle("-fx-border-color: #422775;");
             info.setText("Calculations successful");
-        } catch (Exception e) { //If something above fails
-            if (!paramsParsed) {
-                exceptionHandler.setExceptionMessage("not all params have been entered");
-            }
+        } catch (Exception ex) {
             info.setStyle("-fx-border-color: red;");
-            info.setText("Cannot calculate, " + exceptionHandler.getExceptionMessage());
+            info.setText("Cannot calculate. " + exceptionHandler.getExceptionMessage());
         }
     }
 
@@ -112,13 +114,13 @@ public class mainController {
     void btnSaveSeriesClicked() {
         try {
             String fileName = textFileName.getText();
-            saveHandler.saveTXPoints(fileName, tableValues); //Save series to entered file
+            saveHandler.saveTXPoints(fileName, tableValues);
 
             info.setStyle("-fx-border-color: #422775;");
             info.setText("Saved series to " + fileName);
-        } catch (Exception e) { //If saving fails
+        } catch (Exception ex) {
             info.setStyle("-fx-border-color: red;");
-            info.setText("Cannot save, " + exceptionHandler.getExceptionMessage());
+            info.setText("Cannot save. " + exceptionHandler.getExceptionMessage());
         }
     }
 
@@ -140,14 +142,13 @@ public class mainController {
         assert info != null : "fx:id=\"info\" was not injected: check your FXML file 'main.fxml'.";
         assert equation != null : "fx:id=\"equation\" was not injected: check your FXML file 'main.fxml'.";
 
-        txChart.setLegendVisible(false); //Removing legend (not needed)
+        txChart.setLegendVisible(false);
         time.setCellValueFactory(new PropertyValueFactory<>("time"));
         x.setCellValueFactory(new PropertyValueFactory<>("x"));
         table.setItems(tableValues);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); //Make table static
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         methods.getItems().addAll(EulerMethod.Forward, EulerMethod.Midpoint);
-        methods.setValue(EulerMethod.Midpoint); //For default set midpoint variant of Euler's method
-
-        Platform.runLater(() -> table.requestFocus()); //Focus on table (to not cover text-fields prompt text
+        methods.setValue(EulerMethod.Midpoint);
+        Platform.runLater(() -> table.requestFocus());
     }
 }

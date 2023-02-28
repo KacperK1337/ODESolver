@@ -10,9 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-//Handles saving operations
-//Supports saving calculated t and x points to text file
 public class SaveHandler {
+
     private final ExceptionHandler exceptionHandler;
 
     public SaveHandler(ExceptionHandler exceptionHandler) {
@@ -20,35 +19,19 @@ public class SaveHandler {
     }
 
     public void saveTXPoints(String fileName, ObservableList<PointTX> points) throws Exception {
-        checkForExceptions(fileName, points);
+        exceptionHandler.checkFileName(fileName);
+        exceptionHandler.checkPoints(points);
         Collection<String> linesCollection = new ArrayList<>();
         for (PointTX point : points) {
             linesCollection.add(point.getTime() + "\t" + point.getX());
         }
         try {
-            FileUtils.writeLines(new File(fileName), linesCollection);
+            FileUtils.writeLines(
+                    new File(fileName), linesCollection
+            );
         } catch (IOException ioException) {
-            exceptionHandler.setExceptionMessage(ioException.getMessage());
-            exceptionHandler.throwNewException();
+            exceptionHandler.throwNewException("Invalid file path.");
         }
     }
 
-    private void checkForExceptions(String fileName, ObservableList<PointTX> points) throws Exception {
-        String exceptionMessage;
-        if (fileName.equals("")) {
-            exceptionMessage = "file name was not entered";
-            exceptionHandler.setExceptionMessage(exceptionMessage);
-            exceptionHandler.throwNewException();
-        }
-        if (!fileName.endsWith(".txt")) {
-            exceptionMessage = "entered file is not a text file";
-            exceptionHandler.setExceptionMessage(exceptionMessage);
-            exceptionHandler.throwNewException();
-        }
-        if (points.isEmpty()) {
-            exceptionMessage = "no series was generated";
-            exceptionHandler.setExceptionMessage(exceptionMessage);
-            exceptionHandler.throwNewException();
-        }
-    }
 }

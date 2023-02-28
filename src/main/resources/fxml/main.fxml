@@ -16,111 +16,103 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
             prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.kacperk.mainController">
+            fx:controller="pl.kacperk.MainController">
     <bottom>
         <VBox prefHeight="145.0" prefWidth="900.0" BorderPane.alignment="CENTER">
-            <children>
-                <HBox alignment="TOP_RIGHT" prefHeight="137.0" prefWidth="900.0">
-                    <children>
-                        <TextField fx:id="textFileName" prefHeight="28.0" prefWidth="128.0" promptText="text file name">
-                            <HBox.margin>
-                                <Insets right="15.0" top="10.0"/>
-                            </HBox.margin>
-                            <padding>
-                                <Insets left="10.0" right="10.0"/>
-                            </padding>
-                        </TextField>
-                        <Button fx:id="btnSaveSeries" mnemonicParsing="false" onAction="#btnSaveSeriesClicked"
-                                prefHeight="28.0" prefWidth="85.0" text="Save series" textFill="WHITE">
-                            <HBox.margin>
-                                <Insets right="10.0" top="10.0"/>
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER" prefHeight="134.0" prefWidth="900.0">
-                    <children>
-                        <TextField fx:id="equation" prefHeight="28.0" prefWidth="250.0" promptText="equation">
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
-                            <HBox.margin>
-                                <Insets left="10.0" right="10.0" top="10.0"/>
-                            </HBox.margin>
-                            <padding>
-                                <Insets left="10.0" right="10.0"/>
-                            </padding>
-                        </TextField>
-                        <TextField fx:id="tLeft" prefHeight="28.0" prefWidth="110.0" promptText="a"
-                                   styleClass="TextFields">
-                            <HBox.margin>
-                                <Insets left="10.0" right="10.0" top="10.0"/>
-                            </HBox.margin>
-                            <padding>
-                                <Insets left="10.0" right="10.0"/>
-                            </padding>
-                        </TextField>
-                        <TextField fx:id="tRight" prefHeight="28.0" prefWidth="110.0" promptText="b">
-                            <HBox.margin>
-                                <Insets left="10.0" right="10.0" top="10.0"/>
-                            </HBox.margin>
-                            <padding>
-                                <Insets left="10.0" right="10.0"/>
-                            </padding>
-                        </TextField>
-                        <TextField fx:id="step" prefHeight="28.0" prefWidth="110.0" promptText="h">
-                            <HBox.margin>
-                                <Insets left="10.0" right="10.0" top="10.0"/>
-                            </HBox.margin>
-                            <padding>
-                                <Insets left="10.0" right="10.0"/>
-                            </padding>
-                        </TextField>
-                        <TextField fx:id="initialCondition" prefHeight="28.0" prefWidth="110.0" promptText="x0">
-                            <HBox.margin>
-                                <Insets left="10.0" right="10.0" top="10.0"/>
-                            </HBox.margin>
-                            <padding>
-                                <Insets left="10.0" right="10.0"/>
-                            </padding>
-                        </TextField>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER" prefHeight="142.0" prefWidth="900.0">
-                    <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Method: " textAlignment="CENTER"
-                              wrappingWidth="54.294525146484375">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="10.0"/>
-                            </HBox.margin>
-                        </Text>
-                        <ChoiceBox fx:id="methods" prefHeight="28.0" prefWidth="100.0">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="10.0" right="10.0"/>
-                            </HBox.margin>
-                        </ChoiceBox>
-                        <Button fx:id="btnCalculate" mnemonicParsing="false" onAction="#btnCalculateClicked"
-                                prefHeight="28.0" prefWidth="106.0" text="Calculate" textAlignment="CENTER"
-                                textFill="WHITE">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="10.0" right="10.0"/>
-                            </HBox.margin>
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
-                        </Button>
-                        <TextField fx:id="info" editable="false" mouseTransparent="true" prefHeight="28.0"
-                                   prefWidth="410.0" promptText="Informations and warnings will be displayed here">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="10.0" right="10.0"/>
-                            </HBox.margin>
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
-                        </TextField>
-                    </children>
-                </HBox>
-            </children>
+            <HBox alignment="TOP_RIGHT" prefHeight="137.0" prefWidth="900.0">
+                <TextField fx:id="textFileName" prefHeight="28.0" prefWidth="128.0" promptText="text file name">
+                    <HBox.margin>
+                        <Insets right="15.0" top="10.0"/>
+                    </HBox.margin>
+                    <padding>
+                        <Insets left="10.0" right="10.0"/>
+                    </padding>
+                </TextField>
+                <Button fx:id="btnSaveSeries" mnemonicParsing="false" onAction="#btnSaveSeriesClicked"
+                        prefHeight="28.0" prefWidth="85.0" text="Save series" textFill="WHITE">
+                    <HBox.margin>
+                        <Insets right="10.0" top="10.0"/>
+                    </HBox.margin>
+                </Button>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="134.0" prefWidth="900.0">
+                <TextField fx:id="equation" prefHeight="28.0" prefWidth="250.0" promptText="equation">
+                    <opaqueInsets>
+                        <Insets/>
+                    </opaqueInsets>
+                    <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0"/>
+                    </HBox.margin>
+                    <padding>
+                        <Insets left="10.0" right="10.0"/>
+                    </padding>
+                </TextField>
+                <TextField fx:id="tLeft" prefHeight="28.0" prefWidth="110.0" promptText="a"
+                           styleClass="TextFields">
+                    <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0"/>
+                    </HBox.margin>
+                    <padding>
+                        <Insets left="10.0" right="10.0"/>
+                    </padding>
+                </TextField>
+                <TextField fx:id="tRight" prefHeight="28.0" prefWidth="110.0" promptText="b">
+                    <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0"/>
+                    </HBox.margin>
+                    <padding>
+                        <Insets left="10.0" right="10.0"/>
+                    </padding>
+                </TextField>
+                <TextField fx:id="step" prefHeight="28.0" prefWidth="110.0" promptText="h">
+                    <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0"/>
+                    </HBox.margin>
+                    <padding>
+                        <Insets left="10.0" right="10.0"/>
+                    </padding>
+                </TextField>
+                <TextField fx:id="initialCondition" prefHeight="28.0" prefWidth="110.0" promptText="x0">
+                    <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0"/>
+                    </HBox.margin>
+                    <padding>
+                        <Insets left="10.0" right="10.0"/>
+                    </padding>
+                </TextField>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="142.0" prefWidth="900.0">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Method: " textAlignment="CENTER"
+                      wrappingWidth="54.294525146484375">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="10.0"/>
+                    </HBox.margin>
+                </Text>
+                <ChoiceBox fx:id="methods" prefHeight="28.0" prefWidth="100.0">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0"/>
+                    </HBox.margin>
+                </ChoiceBox>
+                <Button fx:id="btnCalculate" mnemonicParsing="false" onAction="#btnCalculateClicked"
+                        prefHeight="28.0" prefWidth="106.0" text="Calculate" textAlignment="CENTER"
+                        textFill="WHITE">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0"/>
+                    </HBox.margin>
+                    <opaqueInsets>
+                        <Insets/>
+                    </opaqueInsets>
+                </Button>
+                <TextField fx:id="info" editable="false" mouseTransparent="true" prefHeight="28.0"
+                           prefWidth="410.0" promptText="Informations and warnings will be displayed here">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0"/>
+                    </HBox.margin>
+                    <opaqueInsets>
+                        <Insets/>
+                    </opaqueInsets>
+                </TextField>
+            </HBox>
         </VBox>
     </bottom>
     <top>

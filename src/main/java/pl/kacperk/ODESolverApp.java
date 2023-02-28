@@ -17,10 +17,15 @@ public class ODESolverApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/main.fxml")));
+        Parent root = FXMLLoader.load(
+                Objects.requireNonNull(
+                        getClass().getResource("/fxml/main.fxml")
+                )
+        );
         Scene scene = new Scene(root, 900, 600);
-        String css = Objects.requireNonNull
-                (this.getClass().getResource("/stylesheet/main.css")).toExternalForm();
+        String css = Objects.requireNonNull(
+                this.getClass().getResource("/stylesheet/main.css")
+        ).toExternalForm();
         scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.setTitle("ODE Solver");

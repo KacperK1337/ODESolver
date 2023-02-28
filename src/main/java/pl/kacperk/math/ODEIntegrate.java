@@ -4,8 +4,8 @@ import org.mariuszgromada.math.mxparser.Function;
 import pl.kacperk.exception.ExceptionHandler;
 import pl.kacperk.table.PointsHandler;
 
-//Performs ODE integration with Euler's method (variant is selected at ODEIteration constructor)
 public class ODEIntegrate {
+
     private final double a;
     private final double b;
     private final double x0;
@@ -26,7 +26,7 @@ public class ODEIntegrate {
     }
 
     public void integrate(double h) throws Exception {
-        checkForExceptions(h);
+        exceptionHandler.checkStepAndCompartment(h, a, b);
         int n = (int) (((b - a) / h) + 1);
         double[] t_i = new double[n];
         double[] x_i = new double[n];
@@ -39,25 +39,6 @@ public class ODEIntegrate {
                 x_i[i] = euler.nextIteration(t_i[i - 1], x_i[i - 1], h, ode);
             }
             pointsHandler.update(t_i[i], x_i[i]);
-        }
-    }
-
-    private void checkForExceptions(double h) throws Exception {
-        String exceptionMessage;
-        if (h <= 0) {
-            exceptionMessage = "Step h cannot be smaller or equal 0";
-            exceptionHandler.setExceptionMessage(exceptionMessage);
-            exceptionHandler.throwNewException();
-        }
-        if (b <= a) {
-            exceptionMessage = "Compartment end (b) cannot be before or equal to beginning (a)";
-            exceptionHandler.setExceptionMessage(exceptionMessage);
-            exceptionHandler.throwNewException();
-        }
-        if (h >= (b - a)) {
-            exceptionMessage = "Step h is greater or equal compartment length";
-            exceptionHandler.setExceptionMessage(exceptionMessage);
-            exceptionHandler.throwNewException();
         }
     }
 }

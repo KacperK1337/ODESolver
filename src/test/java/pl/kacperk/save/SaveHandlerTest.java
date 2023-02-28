@@ -3,8 +3,6 @@ package pl.kacperk.save;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.kacperk.exception.ExceptionHandler;
@@ -16,127 +14,67 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class SaveHandlerTest {
-    private SaveHandler saveHandler;
-    private ExceptionHandler exceptionHandler;
-    private String fileName;
-    ObservableList<PointTX> points;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-    @BeforeAll
-    public static void beforeAll() throws IOException {
-        File directory = new File("testdump");
-        FileUtils.cleanDirectory(directory);
-    }
+public class SaveHandlerTest {
+
+    private SaveHandler underTest;
 
     @BeforeEach
-    public void beforeEach() {
-        exceptionHandler = new ExceptionHandler();
-        saveHandler = new SaveHandler(exceptionHandler);
+    void beforeEach() throws IOException {
+        File directory = new File("testdump");
+        FileUtils.cleanDirectory(directory);
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        underTest = new SaveHandler(exceptionHandler);
     }
 
     @Test
-    public void saveTXPoints_overwritingExistingFile_pointsSaved() throws Exception {
+    void saveTXPoints_creatingNewFile_pointsSaved() throws Exception {
         //given
-        fileName = "testdump\\series.txt";
+        String fileName = "testdump\\series.txt";
         File dirPath = new File("testdump");
-        PointTX pointTX = new PointTX("1", "1");
-        points = FXCollections.observableArrayList(pointTX);
+        ObservableList<PointTX> points = FXCollections.observableArrayList();
+        points.add(new PointTX("1", "1"));
+
+        //when
+        underTest.saveTXPoints(fileName, points);
+
+        //then
+        assertThat(dirPath.list()).isNotEmpty();
+        assertThat(points.get(0).getTime() + "\t" + points.get(0).getX())
+                .isEqualTo(Files.readAllLines(Path.of(fileName)).get(0));
+    }
+
+    @Test
+    void saveTXPoints_overwritingExistingFile_pointsSaved() throws Exception {
+        //given
+        String fileName = "testdump\\series.txt";
+        File dirPath = new File("testdump");
+        ObservableList<PointTX> points = FXCollections.observableArrayList();
+        points.add(new PointTX("1", "1"));
 
         //when
         FileUtils.writeStringToFile(new File(fileName), "sample", StandardCharsets.UTF_8);
-        saveHandler.saveTXPoints(fileName, points);
+        underTest.saveTXPoints(fileName, points);
 
         //then
-        org.assertj.core.api.Assertions.assertThat(dirPath.list()).isNotEmpty();
-        Assertions.assertEquals(pointTX.getTime() + "\t" + pointTX.getX(),
-                Files.readAllLines(Path.of(fileName)).get(0));
-
-        org.assertj.core.api.Assertions.assertThat(exceptionHandler.getExceptionMessage()).isNull();
+        assertThat(dirPath.list()).isNotEmpty();
+        assertThat(points.get(0).getTime() + "\t" + points.get(0).getX())
+                .isEqualTo(Files.readAllLines(Path.of(fileName)).get(0));
     }
 
     @Test
-    public void saveTXPoints_creatingNewFile_pointsSaved() throws Exception {
+    void saveTXPoints_notExistingFilePath_throwsException() {
         //given
-        fileName = "testdump\\series.txt";
-        File dirPath = new File("testdump");
-        PointTX pointTX = new PointTX("1", "1");
-        points = FXCollections.observableArrayList(pointTX);
+        String fileName = "13f1eab08c2ea85ecd598f255d67bbf7bccbd09611de73bd8150181afacfaf02:\\testdump\\series.txt";
+        ObservableList<PointTX> points = FXCollections.observableArrayList();
+        points.add(new PointTX("1", "1"));
 
-        //when
-        saveHandler.saveTXPoints(fileName, points);
-
-        //then
-        org.assertj.core.api.Assertions.assertThat(dirPath.list()).isNotEmpty();
-        Assertions.assertEquals(pointTX.getTime() + "\t" + pointTX.getX(),
-                Files.readAllLines(Path.of(fileName)).get(0));
-
-        org.assertj.core.api.Assertions.assertThat(exceptionHandler.getExceptionMessage()).isNull();
-    }
-
-    @Test
-    public void saveTXPoints_emptyFileName_throwsException() {
-        //given
-        fileName = "";
-        PointTX pointTX = new PointTX("1", "1");
-        points = FXCollections.observableArrayList(pointTX);
-
-        //when
-        Throwable throwable =
-                org.assertj.core.api.Assertions.catchThrowable(() -> saveHandler.saveTXPoints(fileName, points));
-
-        //then
-        org.assertj.core.api.Assertions.assertThat(throwable)
+        // when
+        // then
+        assertThatThrownBy(() -> underTest.saveTXPoints(fileName, points))
                 .isInstanceOf(Exception.class)
-                .hasMessage(exceptionHandler.getExceptionMessage());
-    }
-
-    @Test
-    public void saveTXPoints_notATextFile_throwsException() {
-        //given
-        fileName = "testdump\\series.png";
-        PointTX pointTX = new PointTX("1", "1");
-        points = FXCollections.observableArrayList(pointTX);
-
-        //when
-        Throwable throwable =
-                org.assertj.core.api.Assertions.catchThrowable(() -> saveHandler.saveTXPoints(fileName, points));
-
-        //then
-        org.assertj.core.api.Assertions.assertThat(throwable)
-                .isInstanceOf(Exception.class)
-                .hasMessage(exceptionHandler.getExceptionMessage());
-    }
-
-    @Test
-    public void saveTXPoints_emptyObservableList_throwsException() {
-        //given
-        fileName = "testdump\\series.txt";
-        points = FXCollections.observableArrayList();
-
-        //when
-        Throwable throwable =
-                org.assertj.core.api.Assertions.catchThrowable(() -> saveHandler.saveTXPoints(fileName, points));
-
-        //then
-        org.assertj.core.api.Assertions.assertThat(throwable)
-                .isInstanceOf(Exception.class)
-                .hasMessage(exceptionHandler.getExceptionMessage());
-    }
-
-    @Test
-    public void saveTXPoints_notExistingFilePath_throwsIOException() {
-        //given
-        fileName = "Z:\\testdump\\series.txt";
-        PointTX pointTX = new PointTX("1", "1");
-        points = FXCollections.observableArrayList(pointTX);
-
-        //when
-        Throwable throwable =
-                org.assertj.core.api.Assertions.catchThrowable(() -> saveHandler.saveTXPoints(fileName, points));
-
-        //then
-        org.assertj.core.api.Assertions.assertThat(throwable)
-                .isInstanceOf(Exception.class)
-                .hasMessage(exceptionHandler.getExceptionMessage());
+                .hasMessageContaining("Invalid file path.");
     }
 }
