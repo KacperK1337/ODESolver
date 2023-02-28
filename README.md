@@ -1,5 +1,5 @@
 # ODESolver
-JavaFx app that solves ordinary differential equations and visualise solutions.
+JavaFX app that solves ordinary differential equations and visualise solutions.
 
 ### Section links
 
